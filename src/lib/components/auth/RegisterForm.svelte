@@ -1,43 +1,36 @@
 <script lang="ts">
 	import { apiFetch } from '$lib/utils/fetcher';
 	import { goto } from '$app/navigation';
+	import { Input } from "$lib/components/ui/input/index.js";
+	import { Button } from "$lib/components/ui/button/index.js";
+	import { useHealth } from '$lib/state/health/health.state';
+	import { createForm } from 'felte';
+	import { useLogin } from '$lib/state/user/login.state';
+	const mutationLogin = useLogin({ onSuccess: (data) => {
+		console.log(data);
+		}});
 
-	let email = '';
-	let password = '';
-	let loading = false;
-	let error = '';
+	const { form } = createForm({
+		onSubmit: async (values) => {
+			// ...
+			console.log(values);
 
-	async function submit() {
-		loading = true;
-		error = '';
+			await mutationLogin.mutateAsync(values);
 
-		try {
-			await apiFetch('/auth/register', {
-				method: 'POST',
-				body: JSON.stringify({ email, password })
-			});
-
-			goto('/login');
-		} catch (e: any) {
-			error = e.message;
-		} finally {
-			loading = false;
 		}
-	}
+	});
+
+	const health = useHealth();
 </script>
 
-<div class="card flex flex-col mx-auto max-w-md space-y-4 p-6">
+<div class="card mx-auto flex max-w-md flex-col space-y-4 p-6">
 	<h1 class="text-center text-2xl font-bold">Register</h1>
 
-	<input placeholder="Email" type="email" bind:value={email} />
-
-	<input placeholder="Password" type="password" bind:value={password} />
-
-	{#if error}
-		<p class="text-error text-sm">{error}</p>
-	{/if}
-
-	<button on:click={submit} disabled={loading} class="button preset-filled">
-		{loading ? 'Creating...' : 'Register'}
-	</button>
+	<form use:form>
+		<Input placeholder="Email" type="email" name="email" />
+		<Input placeholder="Password" type="password" name="password" />
+		<Button variant="outline"
+			type="submit">{health.isLoading ? 'loading' : 'Register'}</Button
+		>
+	</form>
 </div>
