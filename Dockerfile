@@ -15,6 +15,8 @@ RUN npm run build
 
 FROM node:20-alpine
 
+ARG BUILD_TIME
+
 WORKDIR /app
 
 COPY --from=builder /app/build build/
