@@ -18,20 +18,9 @@ RUN npm run build
 
 # ---------- runtime ----------
 
-FROM node:20-alpine
+# serve
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
 
-ARG BUILD_TIME
-ARG CACHEBUST=1
-LABEL build_time=$BUILD_TIME
-
-WORKDIR /app
-
-COPY --from=builder /app/build build/
-COPY --from=builder /app/node_modules node_modules/
-COPY package.json .
-
-EXPOSE 3000
-
-ENV NODE_ENV=production
-
-CMD [ "node", "build" ]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
