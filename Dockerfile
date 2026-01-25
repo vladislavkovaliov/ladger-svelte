@@ -1,6 +1,10 @@
 # ---------- build ----------
 FROM node:20-alpine AS builder
 
+ARG BUILD_TIME
+
+LABEL build_time=$BUILD_TIME
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
