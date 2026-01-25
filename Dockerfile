@@ -2,6 +2,7 @@
 FROM node:20-alpine AS builder
 
 ARG BUILD_TIME
+ARG CACHEBUST=1
 
 LABEL build_time=$BUILD_TIME
 
@@ -20,7 +21,7 @@ RUN npm run build
 FROM node:20-alpine
 
 ARG BUILD_TIME
-
+ARG CACHEBUST=1
 LABEL build_time=$BUILD_TIME
 
 WORKDIR /app
