@@ -13,7 +13,7 @@ RUN npm run build
 
 # ---------- runtime ----------
 
-FROM node:20-alpine AS production
+FROM node:20-alpine
 
 WORKDIR /app
 
