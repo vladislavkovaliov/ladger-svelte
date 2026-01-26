@@ -1,11 +1,6 @@
 # ---------- build ----------
 FROM node:20-alpine AS builder
 
-ARG BUILD_TIME
-ARG CACHEBUST=1
-
-LABEL build_time=$BUILD_TIME
-
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -18,12 +13,16 @@ RUN npm run build
 
 # ---------- runtime ----------
 
-# serve
-FROM nginx:alpine
+FROM node:20-alpine
 
-COPY --from=builder /app/build /usr/share/nginx/html
+WORKDIR /app
 
-RUN sed -i 's/listen\s\+80;/listen 3000;/g' /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build build/
+COPY --from=builder /app/node_modules node_modules/
+COPY package.json .
 
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+
+ENV NODE_ENV=production
+
+CMD [ "node", "build" ]
