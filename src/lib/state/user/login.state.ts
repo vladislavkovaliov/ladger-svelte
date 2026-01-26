@@ -9,7 +9,7 @@ export function useLogin({ onSuccess }: { onSuccess?: (data: { token: string }) 
 				email: payload.email,
 				password: payload.password,
 			}))
-			return apiFetch('/auth/login', {
+			return apiFetch('/login', {
 				method: 'POST',
 				body: JSON.stringify(
 					{
