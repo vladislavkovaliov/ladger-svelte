@@ -1,14 +1,20 @@
 <script lang="ts">
-	import { apiFetch } from '$lib/utils/fetcher';
-	import { goto } from '$app/navigation';
-	import { Input } from "$lib/components/ui/input/index.js";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { useHealth } from '$lib/state/health/health.state';
-	import { createForm } from 'felte';
+	// Components
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
+
+	// State
 	import { useLogin } from '$lib/state/user/login.state';
-	const mutationLogin = useLogin({ onSuccess: (data) => {
-		console.log(data);
-		}});
+	import { useHealth } from '$lib/state/health/health.state';
+
+	// Other
+	import { createForm } from 'felte';
+
+	const mutationLogin = useLogin({
+		onSuccess: (data) => {
+			console.log(data);
+		}
+	});
 
 	const { form } = createForm({
 		onSubmit: async (values) => {
@@ -16,7 +22,6 @@
 			console.log(values);
 
 			await mutationLogin.mutateAsync(values);
-
 		}
 	});
 
@@ -29,8 +34,6 @@
 	<form use:form>
 		<Input placeholder="Email" type="email" name="email" />
 		<Input placeholder="Password" type="password" name="password" />
-		<Button variant="outline"
-			type="submit">{health.isLoading ? 'loading' : 'Register'}</Button
-		>
+		<Button variant="outline" type="submit">{health.isLoading ? 'loading' : 'Register'}</Button>
 	</form>
 </div>

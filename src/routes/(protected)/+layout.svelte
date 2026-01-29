@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	// Svelte
 	import { onMount } from 'svelte';
 
@@ -13,16 +13,12 @@
 		auth.init();
 
 		const unsubscribe = auth.subscribe((state) => {
-			console.log($auth.isAuthenticated);
-
 			if (state.initialized === false) {
 				return;
 			}
 
 			if (state.isAuthenticated === false) {
 				goto(resolve('/login'));
-			} else {
-				goto(resolve('/admin/users'));
 			}
 		});
 
@@ -30,4 +26,4 @@
 	});
 </script>
 
-<div>loading...</div>
+<slot />

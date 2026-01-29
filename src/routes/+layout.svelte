@@ -3,6 +3,7 @@
 
 	import favicon from '$lib/assets/favicon.svg';
 
+	// TanStack Query
 	import { QueryClient } from '@tanstack/svelte-query';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { PersistQueryClientProvider } from '@tanstack/svelte-query-persist-client';
