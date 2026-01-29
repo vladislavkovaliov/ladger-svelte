@@ -1,21 +1,36 @@
 <script lang="ts">
+	// App
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+
+	// Components
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import { createForm } from 'felte';
+
+	// Stores
+	import { auth } from '$lib/stores/auth.store';
+
+	// State
 	import { useLogin } from '$lib/state/user/login.state';
+
+	// Other
+	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-zod';
 	import * as zod from 'zod';
 
 	const schema = zod.object({
 		email: zod.string().email().nonempty(),
-		password: zod.string().nonempty(),
+		password: zod.string().nonempty()
 	});
 
 	const mutationLogin = useLogin({
-		// onSuccess: (data) => {
-		// 	console.log(data);
-		// }
+		onSuccess: (data) => {
+			if (data.token) {
+				auth.login(data.token);
+
+				goto(resolve('/admin/users'));
+			}
+		}
 	});
 
 	const { form } = createForm({
@@ -23,12 +38,10 @@
 		onSubmit: async (values) => {
 			try {
 				await mutationLogin.mutateAsync(values);
-
-				goto('/admin/users');
 			} catch (error) {
 				console.error(error);
 			}
-		},
+		}
 	});
 </script>
 
