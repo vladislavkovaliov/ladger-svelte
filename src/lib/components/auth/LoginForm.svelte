@@ -11,7 +11,7 @@
 	import { auth } from '$lib/stores/auth.store';
 
 	// State
-	import { useLogin } from '$lib/state/user/login.state';
+	import { useLogin } from '$lib/state/auth/login.state';
 
 	// Other
 	import { createForm } from 'felte';

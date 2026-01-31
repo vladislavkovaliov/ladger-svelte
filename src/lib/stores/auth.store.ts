@@ -25,7 +25,7 @@ function createAuth() {
 			}
 
 			const token = localStorage.getItem(STORAGE_JWT_TOKEN_KEY);
-			console.log(token)
+
 			set({ token, isAuthenticated: !!token, initialized: true });
 		},
 

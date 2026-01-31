@@ -1,1 +1,8 @@
-<h1>User page (admin)</h1>
+<script lang="ts">
+
+	import UsersTable from '$lib/components/users/UsersTable.svelte';
+
+</script>
+
+
+<UsersTable />

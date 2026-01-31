@@ -26,4 +26,12 @@
 	});
 </script>
 
+{#if $auth.isAuthenticated}
+	<div class="flex justify-end p-4 space-x-2">
+		<a href={resolve("/admin/users")}>Users</a>
+		<a href={resolve("/payments")}>Payments</a>
+		<button on:click={() => auth.logout()}>logout</button>
+	</div>
+{/if}
+
 <slot />

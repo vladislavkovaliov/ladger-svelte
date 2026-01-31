@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 
 	// State
-	import { useLogin } from '$lib/state/user/login.state';
+	import { useLogin } from '$lib/state/auth/login.state';
 	import { useHealth } from '$lib/state/health/health.state';
 
 	// Other

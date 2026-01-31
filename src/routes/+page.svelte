@@ -13,8 +13,6 @@
 		auth.init();
 
 		const unsubscribe = auth.subscribe((state) => {
-			console.log($auth.isAuthenticated);
-
 			if (state.initialized === false) {
 				return;
 			}
