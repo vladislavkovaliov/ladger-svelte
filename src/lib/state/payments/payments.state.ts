@@ -1,10 +1,10 @@
 import { createQuery } from '@tanstack/svelte-query';
 
 import { apiProtectedFetch } from '$lib/utils/protected-fetcher';
-import type { IPayment } from '$lib/types/payment';
+import type { PaymentsListData } from '$lib/types/api';
 
 export function usePayments() {
-	return createQuery<IPayment[]>(() => ({
+	return createQuery<PaymentsListData>(() => ({
 		queryKey: ['payments'],
 		queryFn: () => apiProtectedFetch('/payments')
 	}));

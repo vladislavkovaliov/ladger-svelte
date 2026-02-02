@@ -10,12 +10,6 @@
 	// Other
 	import { createForm } from 'felte';
 
-	const mutationLogin = useLogin({
-		onSuccess: (data) => {
-			console.log(data);
-		}
-	});
-
 	const { form } = createForm({
 		onSubmit: async (values) => {
 			// ...

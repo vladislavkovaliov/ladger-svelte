@@ -23,9 +23,8 @@
 		<tr class="space-x-4 space-y-1">
 			<td>{payment.ID}</td>
 			<td>{payment.Amount}</td>
-			<td>{payment.CreateDate}</td>
-			<td>{payment.CreateDate}</td>
-			<td>{payment.UpdateDate}</td>
+			<td>{payment.CreatedAt}</td>
+			<td>{payment.UpdatedAt}</td>
 		</tr>
 	{/each}
 	</tbody>

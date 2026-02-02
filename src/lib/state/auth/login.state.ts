@@ -1,28 +1,20 @@
 import { createMutation } from '@tanstack/svelte-query';
 
 import { apiFetch } from '$lib/utils/fetcher';
-
-type ILoginPayload = {
-	email: string;
-	password: string;
-};
-
-type ILoginResponse = {
-	token: string;
-};
+import type { DtoLoginRequest, LoginCreateData } from '$lib/types/api';
 
 type IUseLoginOptions = {
-	onSuccess?: (data: ILoginResponse) => void;
+	onSuccess?: (data: LoginCreateData) => void;
 };
 
 export function useLogin({ onSuccess }: IUseLoginOptions) {
-	return createMutation<ILoginResponse, unknown, ILoginPayload>(() => ({
+	return createMutation<LoginCreateData, unknown, DtoLoginRequest>(() => ({
 		mutationFn: (payload) => {
 			return apiFetch('/auth/login', {
 				method: 'POST',
 				body: JSON.stringify({
-					email: payload.email,
-					password: payload.password
+					Email: payload.Email,
+					Password: payload.Password
 				})
 			});
 		},

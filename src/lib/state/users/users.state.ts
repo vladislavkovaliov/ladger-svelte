@@ -1,10 +1,10 @@
 import { createQuery } from '@tanstack/svelte-query';
 
 import { apiProtectedFetch } from '$lib/utils/protected-fetcher';
-import type { IUser } from '$lib/types/user';
+import type { UsersListData } from '$lib/types/api';
 
 export function useUsers() {
-	return createQuery<IUser[]>(() => ({
+	return createQuery<UsersListData>(() => ({
 		queryKey: ['users'],
 		queryFn: () => apiProtectedFetch('/users')
 	}));

@@ -25,8 +25,8 @@
 
 	const mutationLogin = useLogin({
 		onSuccess: (data) => {
-			if (data.token) {
-				auth.login(data.token);
+			if (data.Token) {
+				auth.login(data.Token);
 
 				goto(resolve('/admin/users'));
 			}
@@ -37,7 +37,10 @@
 		extend: validator({ schema }),
 		onSubmit: async (values) => {
 			try {
-				await mutationLogin.mutateAsync(values);
+				await mutationLogin.mutateAsync({
+					Email: values.email,
+					Password: values.password,
+				});
 			} catch (error) {
 				console.error(error);
 			}
