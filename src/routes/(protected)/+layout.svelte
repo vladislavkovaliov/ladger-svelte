@@ -11,7 +11,7 @@
 
 	onMount(() => {
 		auth.init();
-
+		debugger;
 		const unsubscribe = auth.subscribe((state) => {
 			if (state.initialized === false) {
 				return;
@@ -27,9 +27,15 @@
 </script>
 
 {#if $auth.isAuthenticated}
-	<div class="flex justify-end p-4 space-x-2">
-		<a href={resolve("/admin/users")}>Users</a>
-		<a href={resolve("/payments")}>Payments</a>
+	<div class="flex justify-end space-x-2 p-4">
+		<a href={resolve('/admin/users')}>Users</a>
+		<span>|</span>
+		<a href={resolve('/admin/users/create')}>Create new user</a>
+		<span>|</span>
+		<a href={resolve('/payments')}>Payments</a>
+		<span>|</span>
+		<a href={resolve('/payments/new')}>Create payment</a>
+		<span>|</span>
 		<button on:click={() => auth.logout()}>logout</button>
 	</div>
 {/if}

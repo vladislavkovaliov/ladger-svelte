@@ -10,6 +10,17 @@
  * ---------------------------------------------------------------
  */
 
+export interface DtoCategoryResponse {
+  /** @example "cat_123" */
+  CategoryName: string;
+  /** @example "2026-01-20T00:00:00Z" */
+  CreatedAt: string;
+  /** @example "64f8c..." */
+  ID: string;
+  /** @example "2026-01-20T00:00:00Z" */
+  UpdatedAt: string;
+}
+
 export interface DtoConfigResponse {
   /** @example "8080" */
   Port: string;
@@ -19,6 +30,11 @@ export interface DtoConfigResponse {
   Status: string;
   /** @example "ok" */
   "http://localhost:27017": string;
+}
+
+export interface DtoCreateCategoryRequest {
+  /** @example "cat_123" */
+  CategoryName: string;
 }
 
 export interface DtoCreatePaymentRequest {
@@ -81,6 +97,10 @@ export type CreateCreateData = DtoUserResponse;
 export type LoginCreateData = DtoLoginResponse;
 
 export type ProtectedListData = DtoHealthResponse;
+
+export type CategoriesListData = DtoCategoryResponse[];
+
+export type CategoriesCreateData = DtoCategoryResponse;
 
 export type ConfigListData = DtoConfigResponse;
 
