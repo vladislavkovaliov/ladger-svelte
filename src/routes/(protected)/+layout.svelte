@@ -11,7 +11,7 @@
 
 	onMount(() => {
 		auth.init();
-		debugger;
+
 		const unsubscribe = auth.subscribe((state) => {
 			if (state.initialized === false) {
 				return;
