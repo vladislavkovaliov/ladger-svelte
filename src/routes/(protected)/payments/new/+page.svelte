@@ -1,7 +1,12 @@
 <script lang="ts">
+	// Tanstack
 	import { createForm } from '@tanstack/svelte-form';
+	
+	// Libs	
 	import FieldInfo from '$lib/components/ui/FieldInfo.svelte'
 	import Button from '$lib/components/ui/Button.svelte';
+
+	// State
 	import { useCategories } from '$lib/state/categories/categories.state';
 
 	const categories = useCategories();
@@ -10,6 +15,7 @@
 		defaultValues: {
 			amount: 0,
 			categoryId: "",
+			createdAt: "",
 		},
 		onSubmit: async ({ value }) => {
 			// Do something with form data
@@ -17,7 +23,7 @@
 		},
 	}));
 
-	const validator = RegExp(/^\d+(\.\d{1,2})?$/);
+	const validator = RegExp(/^\d+(\.\d{1,2})?$/);	
 </script>
 
 <div>Create Payment</div>
@@ -41,7 +47,7 @@
 		onChangeAsync: async ({ value }) => {
 			await new Promise((resolve) => setTimeout(resolve, 1000))
 
-			return value < 0 && 'No "error" allowed in email address.'
+			return value < 0 && 'No "error" allowed amount.'
 		},
     }}>
 		{#snippet children(field)}
@@ -68,13 +74,46 @@
 		{/snippet}
 	</form.Field>
 	<form.Field
-		name="categoryId"
+		name="createdAt"
 		validators={{
      	onChange: ({ value }) => {
-			return undefined;
+			return value ? undefined : 'Must be a correct date.';
 		},
 		onChangeAsyncDebounceMs: 500,
 		onChangeAsync: async ({ value }) => {
+			await new Promise((resolve) => setTimeout(resolve, 1000))
+			
+			return value === "" && 'No "error" allowed in created at.'
+		},
+    }}>
+		{#snippet children(field)}
+			<div>
+				<label for={field.name}>Created At</label>
+
+				<input
+					id={field.name}
+					type="date"
+					placeholder="Created At"
+					value={field.state.value}
+					onblur={() => field.handleBlur()}
+					oninput={(e: Event) => {
+						const target = e.target as HTMLInputElement;
+
+						field.handleChange(target.value);
+
+					}}/>
+				<FieldInfo {field} />
+			</div>
+		{/snippet}
+	</form.Field>
+	<form.Field
+		name="categoryId"
+		validators={{
+     	onChange: () => {
+			return undefined;
+		},
+		onChangeAsyncDebounceMs: 500,
+		onChangeAsync: async () => {
 			return false;
 		},
     }}>
@@ -95,7 +134,7 @@
 						}
 					}}	
 				>
-					<option value="">{categories.isPending ? "Loading" : "Select category"}</option>
+					<option value="">{!categories.data ? "Loading" : "Select category"}</option>
 					{#if categories.data}
 						{#each Object.entries(categories.data) as [categoryId, category] (categoryId)}
 							<option value={category.ID}>{category.CategoryName}</option>
